@@ -1,0 +1,340 @@
+{
+  "id": "02dbf0c6-02ce-4dc7-84b9-b96671aca708",
+  "createdAt": "2026-11-19T04:14:22.395Z",
+  "mode": "deterministic-synthetic",
+  "version": "rules-0.2",
+  "datasetHash": "5607430b90e9990e02f9ffc8ffc4a2131b2765be37b2dbeb4acb1d94e344eae7",
+  "split": "holdout",
+  "total": 16,
+  "passed": 14,
+  "failed": 2,
+  "results": [
+    {
+      "id": "E1-4",
+      "group": "正常采集",
+      "name": "另一款车型",
+      "split": "holdout",
+      "input": {
+        "type": "turn",
+        "text": "本田雅阁，2022年上牌"
+      },
+      "expected": {
+        "vehicle.model": "本田雅阁",
+        "vehicle.registrationYear": 2022
+      },
+      "actual": {
+        "vehicle.model": "本田雅阁",
+        "vehicle.registrationYear": 2022
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E1-5",
+      "group": "正常采集",
+      "name": "未覆盖车型",
+      "split": "holdout",
+      "input": {
+        "type": "turn",
+        "text": "比亚迪秦PLUS，2022年上牌"
+      },
+      "expected": {
+        "vehicle.model": "比亚迪秦PLUS",
+        "vehicle.registrationYear": 2022
+      },
+      "actual": {
+        "vehicle.model": "[missing]",
+        "vehicle.registrationYear": 2022
+      },
+      "pass": false,
+      "mismatches": [
+        "vehicle.model"
+      ],
+      "failureType": "extraction_coverage"
+    },
+    {
+      "id": "E2-4",
+      "group": "单位与更正",
+      "name": "年份区分",
+      "split": "holdout",
+      "input": {
+        "type": "turn",
+        "text": "2020款，2021年上牌"
+      },
+      "expected": {
+        "vehicle.registrationYear": 2021
+      },
+      "actual": {
+        "vehicle.registrationYear": 2021
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E2-5",
+      "group": "单位与更正",
+      "name": "缩写里程",
+      "split": "holdout",
+      "input": {
+        "type": "turn",
+        "text": "仪表6.3w公里"
+      },
+      "expected": {
+        "vehicle.mileage": 63000
+      },
+      "actual": {
+        "vehicle.mileage": "[missing]"
+      },
+      "pass": false,
+      "mismatches": [
+        "vehicle.mileage"
+      ],
+      "failureType": "extraction_coverage"
+    },
+    {
+      "id": "E3-4",
+      "group": "时间与回拨",
+      "name": "过去时间",
+      "split": "holdout",
+      "input": {
+        "type": "callback",
+        "time": "2020-01-01T10:00:00+08:00",
+        "quote": "可以回拨"
+      },
+      "expected": {
+        "rejected": true,
+        "callbackCount": 0
+      },
+      "actual": {
+        "rejected": true,
+        "callbackCount": 0
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E3-5",
+      "group": "时间与回拨",
+      "name": "否定回拨",
+      "split": "holdout",
+      "input": {
+        "type": "callback",
+        "time": "2026-11-20T10:00:00+08:00",
+        "quote": "不要明天联系我"
+      },
+      "expected": {
+        "rejected": true,
+        "callbackCount": 0
+      },
+      "actual": {
+        "rejected": true,
+        "callbackCount": 0
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E4-4",
+      "group": "关闭与身份",
+      "name": "已出售表达",
+      "split": "holdout",
+      "input": {
+        "type": "turn",
+        "text": "已出售，不用问了"
+      },
+      "expected": {
+        "route": "close_sold",
+        "eligible": false
+      },
+      "actual": {
+        "route": "close_sold",
+        "eligible": false
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E4-5",
+      "group": "关闭与身份",
+      "name": "不是车主",
+      "split": "holdout",
+      "input": {
+        "type": "turn",
+        "text": "我不是车主"
+      },
+      "expected": {
+        "route": "close_invalid",
+        "eligible": false
+      },
+      "actual": {
+        "route": "close_invalid",
+        "eligible": false
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E5-4",
+      "group": "拒联与投诉",
+      "name": "停止营销",
+      "split": "holdout",
+      "input": {
+        "type": "turn",
+        "text": "停止联系，谢谢"
+      },
+      "expected": {
+        "route": "suppress_contact",
+        "eligible": false
+      },
+      "actual": {
+        "route": "suppress_contact",
+        "eligible": false
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E5-5",
+      "group": "拒联与投诉",
+      "name": "重复触达诉求",
+      "split": "holdout",
+      "input": {
+        "type": "turn",
+        "text": "一直打电话，太烦了"
+      },
+      "expected": {
+        "route": "service_recovery"
+      },
+      "actual": {
+        "route": "service_recovery"
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E6-4",
+      "group": "人工协同",
+      "name": "直接要求人工",
+      "split": "holdout",
+      "input": {
+        "type": "turn",
+        "text": "帮我转人工坐席"
+      },
+      "expected": {
+        "route": "request_handoff"
+      },
+      "actual": {
+        "route": "request_handoff"
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E6-5",
+      "group": "人工协同",
+      "name": "不自动确认转接",
+      "split": "holdout",
+      "input": {
+        "type": "requestOnly"
+      },
+      "expected": {
+        "handoffStatus": "requested"
+      },
+      "actual": {
+        "handoffStatus": "requested"
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E7-4",
+      "group": "恢复与重复",
+      "name": "两轮无法理解",
+      "split": "holdout",
+      "input": {
+        "type": "unclear"
+      },
+      "expected": {
+        "route": "offer_human"
+      },
+      "actual": {
+        "route": "offer_human"
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E7-5",
+      "group": "恢复与重复",
+      "name": "空输入拒绝",
+      "split": "holdout",
+      "input": {
+        "type": "empty"
+      },
+      "expected": {
+        "rejected": true
+      },
+      "actual": {
+        "rejected": true
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E8-4",
+      "group": "调度约束",
+      "name": "没有坐席",
+      "split": "holdout",
+      "input": {
+        "type": "dispatch",
+        "idleAgents": 0,
+        "reservedAgents": 0,
+        "lineCapacity": 8
+      },
+      "expected": {
+        "started": 0
+      },
+      "actual": {
+        "started": 0
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E8-5",
+      "group": "调度约束",
+      "name": "已在拨号",
+      "split": "holdout",
+      "input": {
+        "type": "dispatch",
+        "idleAgents": 2,
+        "reservedAgents": 0,
+        "lineCapacity": 10,
+        "dialing": 2
+      },
+      "expected": {
+        "started": 2
+      },
+      "actual": {
+        "started": 2
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    }
+  ],
+  "limitation": "合成案例上的规则覆盖验证；不代表真实模型准确率、电话体验或业务收益。留出结果查看后不再作为未见数据。"
+}

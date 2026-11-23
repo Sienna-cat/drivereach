@@ -1,0 +1,40 @@
+✔ extracts vehicle facts with quoted evidence and turn id (9.765357ms)
+✔ explicit refusal blocks future marketing and cancels queued work (0.433576ms)
+✔ unresolved complaint routes to service recovery without asking for sale details (0.29283ms)
+✔ high-intent pricing request asks for handoff instead of inventing a quote (0.393252ms)
+✔ callback requires explicit consent and is idempotent by key (0.895584ms)
+✔ current-call handoff requires an agent acceptance event (0.414281ms)
+✔ dispatch simulation is reproducible and caps new dials by capacity (1.258225ms)
+✔ sold vehicle ends the marketing conversation (0.99505ms)
+✔ suppressed leads cannot restart a conversation or schedule a callback (0.534581ms)
+✔ starting twice resumes the same active conversation and does not duplicate a call (0.436467ms)
+✔ a closed conversation rejects further turns without writing a message (0.530506ms)
+✔ refusal cancels previously confirmed callbacks as well as queued calls (0.387581ms)
+✔ registration year is distinct from model year and facts keep correction history (0.828568ms)
+✔ unknown price is processed but not counted as a known monetary value (0.23607ms)
+✔ approximate mileage is not silently turned into an exact number (0.277564ms)
+✔ handoff only becomes accepted after an idle agent is reserved (0.272898ms)
+✔ no idle agent means transfer fails and customer can choose a callback (0.172394ms)
+✔ callback time must be valid, future, and consent cannot be a negated sentence (0.199038ms)
+✔ reserved seats reduce dialing budget and invalid probabilities are rejected (0.167353ms)
+✔ unresolved complaint cannot be bypassed via callback or new conversation (0.269861ms)
+✔ time expressions and refusal do not constitute callback consent (1.637878ms)
+✔ a not-yet-sold vehicle remains eligible and the conversation stays open (0.474115ms)
+✔ explicit correction keeps the final positive model and year (0.209745ms)
+✔ different idempotency keys cannot create duplicate pending handoffs (0.176989ms)
+✔ human accepted call prevents a simultaneous new AI conversation (0.249633ms)
+✔ handoff idempotency keys cannot be reused for another conversation (0.328887ms)
+✔ callback idempotency keys cannot be reused for another lead or time (0.376428ms)
+✔ config honestly labels deterministic mode and has no model secret (52.25787ms)
+✔ HTTP turn creates evidence and refusal cannot be bypassed by a new start (24.988569ms)
+✔ invalid and oversized JSON requests do not mutate state (9.625628ms)
+✔ SQLite state survives server restart and duplicate callback creates one record (25.233618ms)
+✔ static boundary blocks private source and configuration (6.403862ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 271.335622

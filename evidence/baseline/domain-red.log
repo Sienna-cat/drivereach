@@ -1,0 +1,228 @@
+✔ extracts vehicle facts with quoted evidence and turn id (2.362615ms)
+✔ explicit refusal blocks future marketing and cancels queued work (0.448256ms)
+✔ unresolved complaint routes to service recovery without asking for sale details (0.276083ms)
+✔ high-intent pricing request asks for handoff instead of inventing a quote (0.25679ms)
+✔ callback requires explicit consent and is idempotent by key (0.870319ms)
+✔ current-call handoff requires an agent acceptance event (0.320794ms)
+✔ dispatch simulation is reproducible and caps new dials by capacity (0.888625ms)
+✔ sold vehicle ends the marketing conversation (0.305219ms)
+✖ suppressed leads cannot restart a conversation or schedule a callback (1.231957ms)
+✖ starting twice resumes the same active conversation and does not duplicate a call (0.87282ms)
+✖ a closed conversation rejects further turns without writing a message (1.736055ms)
+✖ refusal cancels previously confirmed callbacks as well as queued calls (0.398838ms)
+✖ registration year is distinct from model year and facts keep correction history (0.325042ms)
+✖ unknown price is processed but not counted as a known monetary value (0.19591ms)
+✖ approximate mileage is not silently turned into an exact number (0.190883ms)
+✖ handoff only becomes accepted after an idle agent is reserved (0.227144ms)
+✖ no idle agent means transfer fails and customer can choose a callback (0.304974ms)
+✖ callback time must be valid, future, and consent cannot be a negated sentence (0.344018ms)
+✖ reserved seats reduce dialing budget and invalid probabilities are rejected (0.450422ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 8
+ℹ fail 11
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 138.158799
+
+✖ failing tests:
+
+test at tests/domain.test.mjs:92:1
+✖ suppressed leads cannot restart a conversation or schedule a callback (1.231957ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///Users/boboruiqiu/Documents/ChatGPT/vibe%20coding%20%E9%A1%B9%E7%9B%AE/drive-reach-web/tests/domain.test.mjs:95:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /停止|不可/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/domain.test.mjs:99:1
+✖ starting twice resumes the same active conversation and does not duplicate a call (0.87282ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'conversation-47'
+  - 'conversation-50'
+                  ^
+  
+      at TestContext.<anonymous> (file:///Users/boboruiqiu/Documents/ChatGPT/vibe%20coding%20%E9%A1%B9%E7%9B%AE/drive-reach-web/tests/domain.test.mjs:101:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'conversation-47',
+    expected: 'conversation-50',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/domain.test.mjs:105:1
+✖ a closed conversation rejects further turns without writing a message (1.736055ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///Users/boboruiqiu/Documents/ChatGPT/vibe%20coding%20%E9%A1%B9%E7%9B%AE/drive-reach-web/tests/domain.test.mjs:109:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /结束/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/domain.test.mjs:113:1
+✖ refusal cancels previously confirmed callbacks as well as queued calls (0.398838ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'scheduled'
+  - 'cancelled'
+  
+      at TestContext.<anonymous> (file:///Users/boboruiqiu/Documents/ChatGPT/vibe%20coding%20%E9%A1%B9%E7%9B%AE/drive-reach-web/tests/domain.test.mjs:117:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'scheduled',
+    expected: 'cancelled',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/domain.test.mjs:120:1
+✖ registration year is distinct from model year and facts keep correction history (0.325042ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (file:///Users/boboruiqiu/Documents/ChatGPT/vibe%20coding%20%E9%A1%B9%E7%9B%AE/drive-reach-web/tests/domain.test.mjs:126:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/domain.test.mjs:130:1
+✖ unknown price is processed but not counted as a known monetary value (0.19591ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'unknown'
+  
+      at TestContext.<anonymous> (file:///Users/boboruiqiu/Documents/ChatGPT/vibe%20coding%20%E9%A1%B9%E7%9B%AE/drive-reach-web/tests/domain.test.mjs:133:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'unknown',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/domain.test.mjs:137:1
+✖ approximate mileage is not silently turned into an exact number (0.190883ms)
+  TypeError [Error]: Cannot read properties of undefined (reading 'status')
+      at TestContext.<anonymous> (file:///Users/boboruiqiu/Documents/ChatGPT/vibe%20coding%20%E9%A1%B9%E7%9B%AE/drive-reach-web/tests/domain.test.mjs:141:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/domain.test.mjs:146:1
+✖ handoff only becomes accepted after an idle agent is reserved (0.227144ms)
+  TypeError [Error]: acceptHandoff is not a function
+      at TestContext.<anonymous> (file:///Users/boboruiqiu/Documents/ChatGPT/vibe%20coding%20%E9%A1%B9%E7%9B%AE/drive-reach-web/tests/domain.test.mjs:149:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/domain.test.mjs:155:1
+✖ no idle agent means transfer fails and customer can choose a callback (0.304974ms)
+  TypeError [Error]: acceptHandoff is not a function
+      at TestContext.<anonymous> (file:///Users/boboruiqiu/Documents/ChatGPT/vibe%20coding%20%E9%A1%B9%E7%9B%AE/drive-reach-web/tests/domain.test.mjs:158:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/domain.test.mjs:162:1
+✖ callback time must be valid, future, and consent cannot be a negated sentence (0.344018ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///Users/boboruiqiu/Documents/ChatGPT/vibe%20coding%20%E9%A1%B9%E7%9B%AE/drive-reach-web/tests/domain.test.mjs:165:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/domain.test.mjs:170:1
+✖ reserved seats reduce dialing budget and invalid probabilities are rejected (0.450422ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  6 !== 2
+  
+      at TestContext.<anonymous> (file:///Users/boboruiqiu/Documents/ChatGPT/vibe%20coding%20%E9%A1%B9%E7%9B%AE/drive-reach-web/tests/domain.test.mjs:172:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 6,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

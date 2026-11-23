@@ -1,0 +1,153 @@
+✔ extracts vehicle facts with quoted evidence and turn id (8.462161ms)
+✔ explicit refusal blocks future marketing and cancels queued work (0.415448ms)
+✔ unresolved complaint routes to service recovery without asking for sale details (0.28488ms)
+✔ high-intent pricing request asks for handoff instead of inventing a quote (0.303483ms)
+✔ callback requires explicit consent and is idempotent by key (0.704935ms)
+✔ current-call handoff requires an agent acceptance event (0.364788ms)
+✔ dispatch simulation is reproducible and caps new dials by capacity (0.873438ms)
+✔ sold vehicle ends the marketing conversation (0.372782ms)
+✔ suppressed leads cannot restart a conversation or schedule a callback (0.434288ms)
+✔ starting twice resumes the same active conversation and does not duplicate a call (0.3564ms)
+✔ a closed conversation rejects further turns without writing a message (0.412085ms)
+✔ refusal cancels previously confirmed callbacks as well as queued calls (0.73735ms)
+✔ registration year is distinct from model year and facts keep correction history (0.534787ms)
+✔ unknown price is processed but not counted as a known monetary value (0.193024ms)
+✔ approximate mileage is not silently turned into an exact number (0.258114ms)
+✔ handoff only becomes accepted after an idle agent is reserved (0.246484ms)
+✔ no idle agent means transfer fails and customer can choose a callback (0.169073ms)
+✔ callback time must be valid, future, and consent cannot be a negated sentence (0.216287ms)
+✔ reserved seats reduce dialing budget and invalid probabilities are rejected (0.179205ms)
+✖ unresolved complaint cannot be bypassed via callback or new conversation (0.832658ms)
+✖ time expressions and refusal do not constitute callback consent (0.249632ms)
+✖ a not-yet-sold vehicle remains eligible and the conversation stays open (0.371559ms)
+✖ explicit correction keeps the final positive model and year (0.85193ms)
+✖ different idempotency keys cannot create duplicate pending handoffs (0.532735ms)
+✖ human accepted call prevents a simultaneous new AI conversation (0.438644ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 19
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 148.765025
+
+✖ failing tests:
+
+test at tests/domain.test.mjs:177:1
+✖ unresolved complaint cannot be bypassed via callback or new conversation (0.832658ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///Users/boboruiqiu/Documents/ChatGPT/vibe%20coding%20%E9%A1%B9%E7%9B%AE/drive-reach-web/tests/domain.test.mjs:179:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /停止|诉求/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/domain.test.mjs:184:1
+✖ time expressions and refusal do not constitute callback consent (0.249632ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///Users/boboruiqiu/Documents/ChatGPT/vibe%20coding%20%E9%A1%B9%E7%9B%AE/drive-reach-web/tests/domain.test.mjs:186:29)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/domain.test.mjs:191:1
+✖ a not-yet-sold vehicle remains eligible and the conversation stays open (0.371559ms)
+  AssertionError [ERR_ASSERTION]: Expected "actual" to be strictly unequal to:
+  
+  'close_sold'
+      at TestContext.<anonymous> (file:///Users/boboruiqiu/Documents/ChatGPT/vibe%20coding%20%E9%A1%B9%E7%9B%AE/drive-reach-web/tests/domain.test.mjs:193:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'close_sold',
+    expected: 'close_sold',
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/domain.test.mjs:196:1
+✖ explicit correction keeps the final positive model and year (0.85193ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '丰田卡罗拉' !== '本田雅阁'
+  
+      at TestContext.<anonymous> (file:///Users/boboruiqiu/Documents/ChatGPT/vibe%20coding%20%E9%A1%B9%E7%9B%AE/drive-reach-web/tests/domain.test.mjs:198:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '丰田卡罗拉',
+    expected: '本田雅阁',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/domain.test.mjs:201:1
+✖ different idempotency keys cannot create duplicate pending handoffs (0.532735ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'handoff-3f41e5fb-ee5a-41b5-8570-2f38b45d1ed5'
+  - 'handoff-66885038-2033-4400-8a65-606c303045b4'
+  
+      at TestContext.<anonymous> (file:///Users/boboruiqiu/Documents/ChatGPT/vibe%20coding%20%E9%A1%B9%E7%9B%AE/drive-reach-web/tests/domain.test.mjs:204:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'handoff-3f41e5fb-ee5a-41b5-8570-2f38b45d1ed5',
+    expected: 'handoff-66885038-2033-4400-8a65-606c303045b4',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/domain.test.mjs:207:1
+✖ human accepted call prevents a simultaneous new AI conversation (0.438644ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///Users/boboruiqiu/Documents/ChatGPT/vibe%20coding%20%E9%A1%B9%E7%9B%AE/drive-reach-web/tests/domain.test.mjs:209:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /人工|通话/,
+    operator: 'throws',
+    diff: 'simple'
+  }

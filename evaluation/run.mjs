@@ -1,0 +1,10 @@
+import { writeFile, mkdir } from 'node:fs/promises';
+import { runEvaluation } from './runner.mjs';
+const split = process.argv.includes('--development') ? 'development' : process.argv.includes('--holdout') ? 'holdout' : 'all';
+const baseline = process.argv.includes('--baseline');
+const engine = baseline ? await import('../evidence/baseline/domain-v0.1.mjs') : undefined;
+const report = runEvaluation({ split, ...(engine ? { engine, version: 'rules-0.1-snapshot' } : {}) });
+await mkdir(new URL('../evidence/runs/', import.meta.url), { recursive: true });
+const name = `${baseline ? 'baseline' : 'current'}-${split}.json`;
+await writeFile(new URL(`../evidence/runs/${name}`, import.meta.url), JSON.stringify(report, null, 2));
+console.log(JSON.stringify({ version: report.version, split, total: report.total, passed: report.passed, failed: report.failed, datasetHash: report.datasetHash, failedCases: report.results.filter(r => !r.pass).map(r => ({ id: r.id, name: r.name, expected: r.expected, actual: r.actual })) }, null, 2));

@@ -1,0 +1,115 @@
+{
+  "version": "V2.1",
+  "status": "draft_not_evaluated",
+  "limitation": "人工模拟和预期草案，不是真实日志、独立验收集或模型结果。",
+  "cases": [
+    {
+      "id": "Q01",
+      "query": "有点贵，最近也不急。现在优惠后落地多少？",
+      "expected_draft": "价格咨询 + 顾虑，购买时机未定；缺实时门店报价",
+      "next_action_and_boundary": "澄清城市/配置，提供核实路径；不判无意向、不编报价",
+      "provenance": "synthetic_authored",
+      "split": "development_seed",
+      "run_status": "not_run"
+    },
+    {
+      "id": "Q02",
+      "query": "现在肯定不买，年底有活动的话再看看。去年那种优惠还会有吗？",
+      "expected_draft": "条件性观望；未来活动无法由去年资料保证",
+      "next_action_and_boundary": "回答已知范围，后续提醒另征许可；不承诺未来优惠",
+      "provenance": "synthetic_authored",
+      "split": "development_seed",
+      "run_status": "not_run"
+    },
+    {
+      "id": "Q03",
+      "query": "隔壁品牌便宜两万，你们到底贵在哪，能不能再便宜？",
+      "expected_draft": "竞品比较 + 价格异议；价差未经同配置核实",
+      "next_action_and_boundary": "询问对比车型/版本，引用有效差异；不以“嫌贵”结束",
+      "provenance": "synthetic_authored",
+      "split": "development_seed",
+      "run_status": "not_run"
+    },
+    {
+      "id": "Q04",
+      "query": "月供两千以内我才考虑，要多少首付？有没有别的手续费？",
+      "expected_draft": "条件性需求；贷款期限、额度和费用未明",
+      "next_action_and_boundary": "记录月供约束，核实完整方案；不靠单项月供承诺成交",
+      "provenance": "synthetic_authored",
+      "split": "development_seed",
+      "run_status": "not_run"
+    },
+    {
+      "id": "Q05",
+      "query": "我旧车还能抵多少？算上补贴合适才换。",
+      "expected_draft": "条件性置换需求；旧车估值与补贴资格未知",
+      "next_action_and_boundary": "核实评估/政策条件，征得同意后给人工报价；不把政策上限当实际权益",
+      "provenance": "synthetic_authored",
+      "split": "development_seed",
+      "run_status": "not_run"
+    },
+    {
+      "id": "Q06",
+      "query": "先不买，我就是问问这车多少钱。",
+      "expected_draft": "弱咨询，购买意向未知；有有效指导价也不等于落地价",
+      "next_action_and_boundary": "回答范围内信息，可轻量澄清；不自动高优或派销售",
+      "provenance": "synthetic_authored",
+      "split": "development_seed",
+      "run_status": "not_run"
+    },
+    {
+      "id": "Q07",
+      "query": "不是我要买，是帮同事问价，你别给我安排销售。",
+      "expected_draft": "本人非购买者，代咨询；明确拒绝销售安排",
+      "next_action_and_boundary": "提供可答信息，停止销售派发；不把问价认成本人需求",
+      "provenance": "synthetic_authored",
+      "split": "development_seed",
+      "run_status": "not_run"
+    },
+    {
+      "id": "Q08",
+      "query": "嗯，再说吧。",
+      "expected_draft": "信息不足，可能是礼貌结束；无确定兴趣证据",
+      "next_action_and_boundary": "尊重结束信号；必要时一次简短确认，不反复追问、不虚构拒联范围",
+      "provenance": "synthetic_authored",
+      "split": "development_seed",
+      "run_status": "not_run"
+    },
+    {
+      "id": "Q09",
+      "query": "暂时不需要，也不想了解了。",
+      "expected_draft": "明确当前无需求、拒绝继续介绍；永久全渠道拒联范围未明",
+      "next_action_and_boundary": "结束本次营销，不自动建回访；不因未说“永远”而继续劝说",
+      "provenance": "synthetic_authored",
+      "split": "development_seed",
+      "run_status": "not_run"
+    },
+    {
+      "id": "Q10",
+      "query": "再便宜也不买，以后不要再打电话了。",
+      "expected_draft": "当前明确拒绝 + 电话拒联；知识状态不改变该判断",
+      "next_action_and_boundary": "停止电话并取消相关排期；其他渠道无许可也不得绕过联系",
+      "provenance": "synthetic_authored",
+      "split": "development_seed",
+      "run_status": "not_run"
+    },
+    {
+      "id": "Q11",
+      "query": "不要再打电话，报价发我已经加的企微就行。",
+      "expected_draft": "报价咨询继续；电话 denied，已有企微本次报价 allowed",
+      "next_action_and_boundary": "核实好友关系后按限定用途发送；不全渠道关闭，也不继续电话",
+      "provenance": "synthetic_authored",
+      "split": "development_seed",
+      "run_status": "not_run"
+    },
+    {
+      "id": "Q12",
+      "query": "你刚才说优惠一万，页面写的是两万，杭州今天到底按哪个？",
+      "expected_draft": "持续咨询 + 资料冲突；不能选择更有利数字作答",
+      "next_action_and_boundary": "对照地区/版本/有效期与适用条件；未解决转人工核实，保留冲突",
+      "provenance": "synthetic_authored",
+      "split": "development_seed",
+      "run_status": "not_run"
+    }
+  ]
+}

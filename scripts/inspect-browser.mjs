@@ -1,0 +1,15 @@
+import { createRequire } from 'node:module';
+import { mkdir } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+const require = createRequire(import.meta.url);
+const { chromium } = require('playwright');
+const baseURL = process.env.DRIVEREACH_BASE_URL || 'http://127.0.0.1:4197';
+await mkdir(new URL('../evidence/screenshots/', import.meta.url), { recursive: true });
+const browser = await chromium.launch({ headless: true });
+const page = await browser.newPage({ viewport: { width: 1440, height: 1080 }, deviceScaleFactor: 1 });
+const errors=[]; page.on('pageerror',e=>errors.push(e.message));
+page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+await page.goto(baseURL); await page.waitForLoadState('networkidle');
+console.log(JSON.stringify({ title: await page.title(), url: page.url(), headings: await page.locator('h1,h2').allTextContents(), buttons: await page.locator('button').allTextContents(), errors },null,2));
+await page.screenshot({ path: fileURLToPath(new URL('../evidence/screenshots/01-leads-desktop.png',import.meta.url)), fullPage:true });
+await browser.close();

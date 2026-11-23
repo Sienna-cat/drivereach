@@ -1,0 +1,59 @@
+{
+  "createdAt": "2026-11-19T04:15:56.345Z",
+  "browser": "Chromium headless (bundled Playwright)",
+  "browserPlugin": "not available",
+  "viewports": [
+    "1440×1080",
+    "390×844"
+  ],
+  "checks": [
+    {
+      "name": "页面身份与非空首屏",
+      "pass": true,
+      "detail": "http://127.0.0.1:4197/"
+    },
+    {
+      "name": "新输入到字段证据",
+      "pass": true,
+      "detail": "63000 公里已保存，原文可打开核对"
+    },
+    {
+      "name": "满载时转接失败",
+      "pass": true,
+      "detail": "转接失败可见，未显示接管成功"
+    },
+    {
+      "name": "确认回拨与刷新持久化",
+      "pass": true,
+      "detail": "明确同意后创建，刷新仍显示时间"
+    },
+    {
+      "name": "拒联阻断后续流程",
+      "pass": true,
+      "detail": "对话结束、重新发起按钮禁用"
+    },
+    {
+      "name": "调度与场景评测",
+      "pass": true,
+      "detail": "调度有真实计算输出，40 条案例可见"
+    },
+    {
+      "name": "评测 JSON 导出",
+      "pass": true,
+      "detail": "drivereach-evaluation.json"
+    },
+    {
+      "name": "作品集证据呈现",
+      "pass": true,
+      "detail": "14 / 16"
+    },
+    {
+      "name": "浏览器验收失败",
+      "pass": false,
+      "detail": "page.waitForFunction: Timeout 30000ms exceeded."
+    }
+  ],
+  "errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ]
+}

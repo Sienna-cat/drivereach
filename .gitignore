@@ -1,0 +1,24 @@
+data/
+.env
+.DS_Store
+
+# Portable portfolio delivery
+node_modules/
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.db
+__pycache__/
+*.pyc
+.venv/
+coverage/
+*.log
+dist/
+
+# Preserve historical verification logs
+!evidence/**/*.log

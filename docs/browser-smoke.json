@@ -1,0 +1,55 @@
+{
+  "project": "drivereach",
+  "checkedAt": "2026-11-23T04:03:54.088Z",
+  "runtime": "v24.22.3",
+  "browser": "Chromium / Playwright",
+  "baseURL": "http://127.0.0.1:5197",
+  "checks": [
+    {
+      "api": "/api/config",
+      "pass": true
+    },
+    {
+      "api": "/api/state",
+      "pass": true
+    },
+    {
+      "api": "/api/metrics",
+      "pass": true
+    },
+    {
+      "api": "/api/verified-report",
+      "pass": true
+    },
+    {
+      "api": "/api/first-holdout",
+      "pass": true
+    },
+    {
+      "api": "/api/baseline",
+      "pass": true
+    },
+    {
+      "route": "/",
+      "width": 1440,
+      "pass": true
+    },
+    {
+      "route": "/portfolio.html",
+      "width": 1440,
+      "pass": true
+    },
+    {
+      "route": "/",
+      "width": 390,
+      "pass": true
+    },
+    {
+      "route": "/portfolio.html",
+      "width": 390,
+      "pass": true
+    }
+  ],
+  "issues": [],
+  "pass": true
+}

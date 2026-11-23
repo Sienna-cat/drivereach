@@ -1,0 +1,530 @@
+{
+  "id": "1ebbfaa8-e5eb-4a87-ba2e-7ff0b333493f",
+  "createdAt": "2026-11-19T03:57:25.756Z",
+  "mode": "deterministic-synthetic",
+  "version": "rules-0.1-snapshot",
+  "datasetHash": "5607430b90e9990e02f9ffc8ffc4a2131b2765be37b2dbeb4acb1d94e344eae7",
+  "split": "development",
+  "total": 24,
+  "passed": 11,
+  "failed": 13,
+  "results": [
+    {
+      "id": "E1-1",
+      "group": "正常采集",
+      "name": "车型与年份",
+      "split": "development",
+      "input": {
+        "type": "turn",
+        "text": "丰田卡罗拉，2020年上牌"
+      },
+      "expected": {
+        "vehicle.model": "丰田卡罗拉",
+        "vehicle.registrationYear": 2020
+      },
+      "actual": {
+        "vehicle.model": "丰田卡罗拉",
+        "vehicle.registrationYear": 2020
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E1-2",
+      "group": "正常采集",
+      "name": "数字里程",
+      "split": "development",
+      "input": {
+        "type": "turn",
+        "text": "现在63000公里，两周内卖"
+      },
+      "expected": {
+        "vehicle.mileage": 63000,
+        "vehicle.saleWindow": "两周内"
+      },
+      "actual": {
+        "vehicle.mileage": 63000,
+        "vehicle.saleWindow": "两周内"
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E1-3",
+      "group": "正常采集",
+      "name": "城市及价格",
+      "split": "development",
+      "input": {
+        "type": "turn",
+        "text": "车在上海，期望12万元"
+      },
+      "expected": {
+        "vehicle.city": "上海",
+        "vehicle.expectedPrice": 120000
+      },
+      "actual": {
+        "vehicle.city": "[missing]",
+        "vehicle.expectedPrice": "[missing]"
+      },
+      "pass": false,
+      "mismatches": [
+        "vehicle.city",
+        "vehicle.expectedPrice"
+      ],
+      "failureType": "extraction_coverage"
+    },
+    {
+      "id": "E2-1",
+      "group": "单位与更正",
+      "name": "中文里程",
+      "split": "development",
+      "input": {
+        "type": "turn",
+        "text": "六万三千公里"
+      },
+      "expected": {
+        "vehicle.mileage": 63000
+      },
+      "actual": {
+        "vehicle.mileage": 63000
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E2-2",
+      "group": "单位与更正",
+      "name": "近似里程",
+      "split": "development",
+      "input": {
+        "type": "turn",
+        "text": "六万多公里"
+      },
+      "expected": {
+        "fieldStatus.mileage": "needs_confirmation"
+      },
+      "actual": {
+        "fieldStatus.mileage": "[missing]"
+      },
+      "pass": false,
+      "mismatches": [
+        "fieldStatus.mileage"
+      ],
+      "failureType": "extraction_coverage"
+    },
+    {
+      "id": "E2-3",
+      "group": "单位与更正",
+      "name": "价格未知",
+      "split": "development",
+      "input": {
+        "type": "turn",
+        "text": "价格还没想好"
+      },
+      "expected": {
+        "vehicle.expectedPrice": null,
+        "fieldStatus.expectedPrice": "unknown"
+      },
+      "actual": {
+        "vehicle.expectedPrice": "[missing]",
+        "fieldStatus.expectedPrice": "[missing]"
+      },
+      "pass": false,
+      "mismatches": [
+        "vehicle.expectedPrice",
+        "fieldStatus.expectedPrice"
+      ],
+      "failureType": "extraction_coverage"
+    },
+    {
+      "id": "E3-1",
+      "group": "时间与回拨",
+      "name": "忙碌稍后联系",
+      "split": "development",
+      "input": {
+        "type": "turn",
+        "text": "现在很忙，明天联系吧"
+      },
+      "expected": {
+        "route": "offer_callback"
+      },
+      "actual": {
+        "route": "collect"
+      },
+      "pass": false,
+      "mismatches": [
+        "route"
+      ],
+      "failureType": "business_rule"
+    },
+    {
+      "id": "E3-2",
+      "group": "时间与回拨",
+      "name": "有效回拨",
+      "split": "development",
+      "input": {
+        "type": "callback",
+        "time": "2026-11-20T10:00:00+08:00",
+        "quote": "明天十点可以回拨"
+      },
+      "expected": {
+        "callbackCount": 1,
+        "callbackStatus": "scheduled"
+      },
+      "actual": {
+        "callbackCount": 1,
+        "callbackStatus": "scheduled"
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E3-3",
+      "group": "时间与回拨",
+      "name": "无同意证据",
+      "split": "development",
+      "input": {
+        "type": "callback",
+        "time": "2026-11-20T10:00:00+08:00",
+        "quote": ""
+      },
+      "expected": {
+        "rejected": true,
+        "callbackCount": 0
+      },
+      "actual": {
+        "rejected": true,
+        "callbackCount": 0
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E4-1",
+      "group": "关闭与身份",
+      "name": "车辆已售",
+      "split": "development",
+      "input": {
+        "type": "turn",
+        "text": "车已经卖掉了"
+      },
+      "expected": {
+        "route": "close_sold",
+        "status": "sold"
+      },
+      "actual": {
+        "route": "close_sold",
+        "status": "sold"
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E4-2",
+      "group": "关闭与身份",
+      "name": "身份不符",
+      "split": "development",
+      "input": {
+        "type": "turn",
+        "text": "你们打错了，不是本人"
+      },
+      "expected": {
+        "route": "close_invalid",
+        "status": "invalid"
+      },
+      "actual": {
+        "route": "collect",
+        "status": "in_conversation"
+      },
+      "pass": false,
+      "mismatches": [
+        "route",
+        "status"
+      ],
+      "failureType": "business_rule"
+    },
+    {
+      "id": "E4-3",
+      "group": "关闭与身份",
+      "name": "关闭后不可继续",
+      "split": "development",
+      "input": {
+        "type": "closedTurn"
+      },
+      "expected": {
+        "rejected": true
+      },
+      "actual": {
+        "rejected": false
+      },
+      "pass": false,
+      "mismatches": [
+        "rejected"
+      ],
+      "failureType": "business_rule"
+    },
+    {
+      "id": "E5-1",
+      "group": "拒联与投诉",
+      "name": "拒绝再联系",
+      "split": "development",
+      "input": {
+        "type": "turn",
+        "text": "以后不要再联系我"
+      },
+      "expected": {
+        "route": "suppress_contact",
+        "eligible": false
+      },
+      "actual": {
+        "route": "collect",
+        "eligible": true
+      },
+      "pass": false,
+      "mismatches": [
+        "route",
+        "eligible"
+      ],
+      "failureType": "business_rule"
+    },
+    {
+      "id": "E5-2",
+      "group": "拒联与投诉",
+      "name": "投诉优先",
+      "split": "development",
+      "input": {
+        "type": "turn",
+        "text": "我要投诉"
+      },
+      "expected": {
+        "route": "service_recovery",
+        "status": "complaint"
+      },
+      "actual": {
+        "route": "service_recovery",
+        "status": "complaint"
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E5-3",
+      "group": "拒联与投诉",
+      "name": "拒联禁止重启",
+      "split": "development",
+      "input": {
+        "type": "restartSuppressed"
+      },
+      "expected": {
+        "rejected": true
+      },
+      "actual": {
+        "rejected": false
+      },
+      "pass": false,
+      "mismatches": [
+        "rejected"
+      ],
+      "failureType": "business_rule"
+    },
+    {
+      "id": "E6-1",
+      "group": "人工协同",
+      "name": "报价诉求",
+      "split": "development",
+      "input": {
+        "type": "turn",
+        "text": "你们能给多少钱"
+      },
+      "expected": {
+        "route": "request_handoff"
+      },
+      "actual": {
+        "route": "request_handoff"
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E6-2",
+      "group": "人工协同",
+      "name": "坐席接受",
+      "split": "development",
+      "input": {
+        "type": "handoff",
+        "busy": false
+      },
+      "expected": {
+        "handoffStatus": "accepted",
+        "conversationStatus": "handed_off"
+      },
+      "actual": {
+        "handoffStatus": "requested",
+        "conversationStatus": "active"
+      },
+      "pass": false,
+      "mismatches": [
+        "handoffStatus",
+        "conversationStatus"
+      ],
+      "failureType": "business_rule"
+    },
+    {
+      "id": "E6-3",
+      "group": "人工协同",
+      "name": "坐席满载",
+      "split": "development",
+      "input": {
+        "type": "handoff",
+        "busy": true
+      },
+      "expected": {
+        "handoffStatus": "failed",
+        "callbackCount": 0
+      },
+      "actual": {
+        "handoffStatus": "requested",
+        "callbackCount": 0
+      },
+      "pass": false,
+      "mismatches": [
+        "handoffStatus"
+      ],
+      "failureType": "business_rule"
+    },
+    {
+      "id": "E7-1",
+      "group": "恢复与重复",
+      "name": "重复启动",
+      "split": "development",
+      "input": {
+        "type": "repeatStart"
+      },
+      "expected": {
+        "conversationCount": 1
+      },
+      "actual": {
+        "conversationCount": 2
+      },
+      "pass": false,
+      "mismatches": [
+        "conversationCount"
+      ],
+      "failureType": "business_rule"
+    },
+    {
+      "id": "E7-2",
+      "group": "恢复与重复",
+      "name": "重复回拨确认",
+      "split": "development",
+      "input": {
+        "type": "repeatCallback"
+      },
+      "expected": {
+        "callbackCount": 1
+      },
+      "actual": {
+        "callbackCount": 1
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E7-3",
+      "group": "恢复与重复",
+      "name": "保留更正历史",
+      "split": "development",
+      "input": {
+        "type": "correction"
+      },
+      "expected": {
+        "mileageEvidenceCount": 2,
+        "vehicle.mileage": 63000
+      },
+      "actual": {
+        "mileageEvidenceCount": 1,
+        "vehicle.mileage": 63000
+      },
+      "pass": false,
+      "mismatches": [
+        "mileageEvidenceCount"
+      ],
+      "failureType": "business_rule"
+    },
+    {
+      "id": "E8-1",
+      "group": "调度约束",
+      "name": "基础预算",
+      "split": "development",
+      "input": {
+        "type": "dispatch",
+        "idleAgents": 2,
+        "reservedAgents": 0,
+        "lineCapacity": 10
+      },
+      "expected": {
+        "started": 4
+      },
+      "actual": {
+        "started": 4
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    },
+    {
+      "id": "E8-2",
+      "group": "调度约束",
+      "name": "预留坐席",
+      "split": "development",
+      "input": {
+        "type": "dispatch",
+        "idleAgents": 2,
+        "reservedAgents": 1,
+        "lineCapacity": 10
+      },
+      "expected": {
+        "started": 2
+      },
+      "actual": {
+        "started": 6
+      },
+      "pass": false,
+      "mismatches": [
+        "started"
+      ],
+      "failureType": "business_rule"
+    },
+    {
+      "id": "E8-3",
+      "group": "调度约束",
+      "name": "线路容量",
+      "split": "development",
+      "input": {
+        "type": "dispatch",
+        "idleAgents": 5,
+        "reservedAgents": 0,
+        "lineCapacity": 3
+      },
+      "expected": {
+        "started": 3
+      },
+      "actual": {
+        "started": 3
+      },
+      "pass": true,
+      "mismatches": [],
+      "failureType": null
+    }
+  ],
+  "limitation": "合成案例上的规则覆盖验证；不代表真实模型准确率、电话体验或业务收益。留出结果查看后不再作为未见数据。"
+}
