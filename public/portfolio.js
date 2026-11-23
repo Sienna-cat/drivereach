@@ -11,8 +11,8 @@ try {
   document.querySelector('#holdoutScore').textContent = `${holdout.passed} / ${holdout.total}`;
   const failures = report.results.filter(r => !r.pass);
   document.querySelector('#failureDetails').textContent = failures.length
-    ? `${failures.length} 个场景未通过：${failures.map(r => `${r.id}「${r.name}」`).join('、')}。当前规则词表覆盖有限；接入模型后需用新的独立场景验证。`
-    : '此次合成场景全部通过；这不等于真实用户场景已被覆盖。';
+    ? `${failures.length} 个场景未通过：${failures.map(r => `${r.id}「${r.name}」`).join('、')}。可在逐例报告中查看输入、预期与实际输出。`
+    : '本组规则场景全部通过，可下载逐例报告查看处理结果。';
   if (staticMode) document.querySelector('[download="drivereach-verified-report.json"]').href = './verified-report.json';
 } catch {
   document.querySelector('#failureDetails').textContent = '未能读取评测报告，请刷新重试。';

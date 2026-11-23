@@ -54,10 +54,10 @@ node evaluation/run.mjs --holdout
 
 实际验证记录见 [`evidence/verification.md`](evidence/verification.md)，逐案例 JSON 和浏览器截图见 [`evidence/`](evidence/)。
 
-模型接口与真实电话线路暂未配置。接入模型时应保留现有工具契约和评测划分，增加新的独立案例；接通率、ASR/TTS、用户采用和销售转化不能从当前 Demo 推导。
+运行方式：规则引擎与模拟线路；在线版使用浏览器存储，本地服务使用 SQLite。评测结果针对固定合成场景中的字段、路由和任务行为。
 
 
-## 独立交付内容与后续 GitHub
+## 源码与交付
 
 本目录包含网页、业务逻辑、演示数据、测试、设计文档和现有验证材料。全部运行路径在目录内解析。数据来自合成样例；官方产品知识为带来源和采集日期的静态摘要。
 
@@ -67,7 +67,7 @@ node evaluation/run.mjs --holdout
 - `docs/项目案例.md`：与整份作品集的关系、职责和演示重点。
 - `docs/交付验证.md`：本次拆分后的验证结果。
 
-本目录是独立 GitHub 仓库的项目根目录。仓库地址：[Sienna-cat/drivereach](https://github.com/Sienna-cat/drivereach)。上传仓库只提供源码下载；要让面试官点击公网网址直接演示，还需后续托管。默认规则模式不需要 API Key，也不会拨打电话或发送企微消息。
+本目录是独立 GitHub 仓库的项目根目录。仓库地址：[Sienna-cat/drivereach](https://github.com/Sienna-cat/drivereach)。项目已通过 GitHub Pages 提供在线交互演示。默认规则模式不需要 API Key，也不会拨打电话或发送企微消息。
 
 ### 数据库与评测
 
