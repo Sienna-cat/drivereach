@@ -1,3 +1,5 @@
+const STATIC_MODE = document.documentElement.dataset.hosting === 'static';
+const browserApi = STATIC_MODE ? (await import('./static-api.mjs')).createStaticApi() : null;
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
 const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
@@ -7,6 +9,12 @@ const routeNames = { collect: '信息确认', suppress_contact: '停止触达', 
 const ui = { view: location.hash.slice(1) || 'leads', selected: 'lead-001', query: '', filter: 'all', dispatch: null, busy: false, report: null, baseline: null };
 let state;
 async function api(path, body) {
+  if (browserApi) {
+    const payload = await browserApi(path, body);
+    if (payload?.state) state = payload.state;
+    if (payload?.warning) toast(payload.warning, true);
+    return payload;
+  }
   const r = await fetch(path, body === undefined ? {} : { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
   const payload = await r.json(); if (!r.ok) throw new Error(payload.error || '请求失败');
   if (payload.state) state = payload.state;
@@ -41,11 +49,11 @@ function leadsView() {
   const connected = new Set(state.conversations.map(c => c.leadId)).size;
   const eligible = state.leads.filter(l => l.contactEligible).length;
   const rows = state.leads.filter(l => (!ui.query || `${l.name} ${l.id} ${l.city}`.toLowerCase().includes(ui.query.toLowerCase())) && (ui.filter === 'all' || ui.filter === 'queued' && l.status === 'queued' || ui.filter === 'active' && !['queued','sold','suppressed','invalid'].includes(l.status) || ui.filter === 'closed' && !l.contactEligible));
-  return `${head('LEAD OPERATIONS', '让每条线索，都有明确的下一步。', '从首次触达、信息确认到人工承接，在一个工作空间中完成。', '<a class="btn secondary" href="/portfolio.html">查看项目过程 ↗</a>')}
+  return `${head('LEAD OPERATIONS', '让每条线索，都有明确的下一步。', '从首次触达、信息确认到人工承接，在一个工作空间中完成。', '<a class="btn secondary" href="./portfolio.html">查看项目过程 ↗</a>')}
   <div class="metrics">${metric('演示线索', state.leads.length, '批次 SYN-20261119 · 合成样本', '▦')}${metric('已进入对话', connected, `去重线索 / ${state.leads.length} 条`, '◌')}${metric('等待人工回拨', state.callbacks.filter(c => c.status === 'scheduled').length, '已确认具体时间的任务', '↗', 'accent')}${metric('允许后续触达', eligible, '拒联、已售与无效身份被排除', '◎')}</div>
   <div class="workspace-grid"><section class="panel lead-panel"><div class="panel-head"><div><h2>卖车线索池 <span class="count">${state.leads.length}</span></h2><p>先确认意愿，再推进下一步</p></div><label class="search"><span>⌕</span><input id="search" value="${esc(ui.query)}" placeholder="搜索姓名、线索编号" aria-label="搜索线索"></label></div><div class="tabs">${[['all','全部'],['queued','待触达'],['active','处理中'],['closed','已关闭']].map(([k,v]) => `<button data-filter="${k}" class="tab ${ui.filter===k?'selected':''}">${v}</button>`).join('')}<span class="sample-label">合成线索</span></div><div class="lead-table"><div class="table-head"><span>客户 / 来源</span><span>所在城市</span><span>当前状态</span><span></span></div>${rows.length ? rows.map(l => `<button class="lead-row ${l.id===lead.id?'selected':''}" data-lead="${l.id}"><span class="person"><span class="person-icon">${l.name[0]}</span><span><b>${esc(l.name)}</b><small>${l.id.toUpperCase()} · 卖车留资</small></span></span><span class="city">${l.city}</span>${tag(l.status)}<span class="row-arrow">↗</span></button>`).join('') : '<div class="empty">没有符合条件的线索</div>'}</div><div class="table-footer"><span>共 ${rows.length} 条 · 单一演示批次</span><span>联系资格在每次发起前重新检查</span></div></section>
   <aside class="panel lead-detail"><div class="detail-top"><span class="eyebrow">LEAD CONTEXT</span>${tag(lead.status)}</div><div class="person large"><span class="person-icon">${lead.name[0]}</span><span><h2>${lead.name}</h2><small>${lead.id.toUpperCase()} · ${lead.phone}</small></span></div><div class="detail-label">线索背景 <span>虚构情境</span></div><p class="context">${esc(lead.history[0].text)}</p><div class="fact-mini"><div><span>意向判定</span><b>${lead.contactEligible ? '等待对话确认' : '已停止营销触达'}</b></div><div><span>数据来源</span><b>演示留资批次</b></div></div><div class="flow-card"><span class="eyebrow">处理路径</span><div><span class="flow-dot current"></span>意愿与身份确认</div><div><span class="flow-dot"></span>采集有证据的车辆信息</div><div><span class="flow-dot"></span>明确结果与后续安排</div></div><div class="detail-action"><button class="btn primary full" id="startButton" ${!lead.contactEligible || lead.status==='complaint' ? 'disabled' : ''}>${c ? '查看当前对话' : '开始模拟外呼'} <span>→</span></button><small>${lead.contactEligible ? '文本扮演车主 · 电话线路为模拟' : '已按规则排除后续触达'}</small></div></aside></div>
-  <div class="bottom-note"><span>✦</span><p><b>每一个业务动作都有依据。</b> 对话证据、路由原因和写入结果会保留在本地，支持导出复查。</p><a href="/portfolio.html#validation">验证方法 ↗</a></div>`;
+  <div class="bottom-note"><span>✦</span><p><b>每一个业务动作都有依据。</b> 对话证据、路由原因和写入结果会保留在本地，支持导出复查。</p><a href="./portfolio.html#validation">验证方法 ↗</a></div>`;
 }
 function conversationView() {
   const lead = selectedLead(); const c = selectedConversation();
@@ -102,4 +110,4 @@ $$('.nav-item').forEach(b=>b.onclick=()=>setView(b.dataset.view));
 $('#menuButton').onclick=()=>$('#sidebar').classList.toggle('open');
 $('#exportButton').onclick=()=>action(async()=>download('drivereach-process.json',await api('/api/export')));
 try { state=await api('/api/state'); ui.report=state.evaluations[0]; render(); }
-catch(error){$('#app').innerHTML=`<div class="panel empty"><h2>暂时无法连接本地服务</h2><p>${esc(error.message)}</p><button class="btn primary" onclick="location.reload()">重新连接</button></div>`;}
+catch(error){$('#app').innerHTML=`<div class="panel empty"><h2>暂时无法载入演示</h2><p>${esc(error.message)}</p><button class="btn primary" onclick="location.reload()">重新连接</button></div>`;}

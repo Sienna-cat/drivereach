@@ -1,5 +1,16 @@
 # DriveReach AI
 
+## 在线 Demo（无需安装）
+
+**[点击直接操作 Drivereach →](https://sienna-cat.github.io/drivereach/)**
+
+[作品集与四个 Demo 总入口](https://sienna-cat.github.io/drivefollow/portfolio/#demos) · [公开源码](https://github.com/Sienna-cat/drivereach)
+
+打开网址即可体验，无需登录、下载代码或启动本地服务。使用合成数据与浏览器规则演示，不调用真实电话、企微或大模型；操作仅在当前浏览器内保存，不会影响其他访客。DriveReach 的 40 个规则场景会在浏览器中实际执行。
+
+更新 `main` 后，GitHub Actions 会运行测试并自动部署。可用 `npm run build:static` 生成 `dist/` 静态站点。
+
+
 二手车卖车线索的 AI 对话与人工协同作品集 Demo。当前版本先验证业务规则、状态流转、证据保存和可复查评测，使用合成数据、文本模拟电话和确定性规则引擎。
 
 ## 快速启动（独立项目版）
